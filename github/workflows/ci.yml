@@ -1,21 +1,24 @@
-name: CI
+name: DevOps CI
 
 on:
   push:
   pull_request:
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Build Docker Image
+      - name: Build Docker image
         run: docker build -t portfolio .
 
-      - name: Run Container
+      - name: Run container
         run: docker run -d -p 8080:80 portfolio
 
-      - name: Smoke Test
-        run: curl -f http://localhost:8080
+      - name: Smoke test
+        run: |
+          sleep 5
+          curl -f http://localhost:8080
