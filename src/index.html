@@ -1,508 +1,228 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mhmd Allaalden — DevOps Portfolio</title>
-  <meta name="description" content="DevOps portfolio: Docker, CI/CD, GitHub Actions, Node.js, MySQL" />
-
-  <link rel="icon" href="/favicon.ico" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&display=swap" rel="stylesheet">
-
+  <title>Portfolio - DevOps | Mhmd Allaalden</title>
   <style>
     :root{
-      --bg: #0b1020;
-      --card: rgba(255,255,255,.06);
-      --border: rgba(255,255,255,.12);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.72);
-      --muted2: rgba(255,255,255,.55);
-      --shadow: 0 20px 60px rgba(0,0,0,.40);
-      --radius: 18px;
-      --pad: 18px;
-      --accent: #7c3aed;
-      --accent2:#22c55e;
-      --link: #93c5fd;
-      --max: 1060px;
+      --bg:#0b1020; --card:#111936; --muted:#9fb0ff;
+      --text:#e9ecff; --accent:#7c5cff; --accent2:#23d5ab;
+      --border:rgba(255,255,255,.08);
     }
-
-    *{ box-sizing: border-box; }
-    html, body{ height: 100%; }
+    *{box-sizing:border-box}
     body{
-      margin: 0;
-      font-family: "Heebo", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-      background: radial-gradient(1200px 800px at 15% 10%, rgba(124,58,237,.22), transparent 60%),
-                  radial-gradient(1200px 800px at 85% 10%, rgba(34,197,94,.16), transparent 55%),
-                  radial-gradient(1200px 900px at 50% 100%, rgba(59,130,246,.12), transparent 60%),
+      margin:0; font-family: system-ui, "Segoe UI", Arial;
+      background: radial-gradient(1200px 600px at 10% 0%, rgba(124,92,255,.25), transparent 60%),
+                  radial-gradient(900px 500px at 90% 20%, rgba(35,213,171,.18), transparent 55%),
                   var(--bg);
-      color: var(--text);
-      line-height: 1.6;
+      color:var(--text);
     }
-
-    a{ color: var(--link); text-decoration: none; }
-    a:hover{ text-decoration: underline; }
-
-    .wrap{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 28px 18px 60px;
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:1100px; margin:0 auto; padding:28px 18px 60px}
+    .top{
+      display:flex; gap:16px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+      padding:16px 18px; border:1px solid var(--border); border-radius:16px;
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+      backdrop-filter: blur(10px);
     }
-
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      user-select:none;
-    }
-
-    .logo{
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      background:
-        linear-gradient(135deg, rgba(124,58,237,.95), rgba(34,197,94,.75));
-      box-shadow: 0 14px 35px rgba(124,58,237,.25);
-      display:grid;
-      place-items:center;
-      border: 1px solid rgba(255,255,255,.18);
-    }
-    .logo span{ font-weight: 800; letter-spacing: .5px; }
-
-    .nav{
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items:center;
-      justify-content:flex-end;
-    }
-
-    .chip{
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.04);
-      padding: 8px 12px;
-      border-radius: 999px;
-      color: var(--text);
-      font-size: 14px;
-    }
-
-    .btn{
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      padding: 10px 14px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-    .btn:hover{ background: rgba(255,255,255,.10); }
-
-    .hero{
-      margin-top: 10px;
-      padding: 22px;
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      display:grid;
-      grid-template-columns: 1.35fr .65fr;
-      gap: 18px;
-    }
-
-    .hero h1{
-      margin: 0;
-      font-size: 44px;
-      letter-spacing: .2px;
-      line-height: 1.15;
-    }
-    .hero p{
-      margin: 10px 0 0;
-      color: var(--muted);
-      font-size: 16px;
-    }
-
-    .badges{
-      margin-top: 14px;
-      display:flex;
-      flex-wrap:wrap;
-      gap: 10px;
-    }
-    .badge{
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
-      padding: 8px 10px;
-      border-radius: 999px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .card{
-      padding: var(--pad);
-      border-radius: var(--radius);
-      background: rgba(255,255,255,.06);
-      border: 1px solid var(--border);
-      box-shadow: 0 16px 45px rgba(0,0,0,.25);
-    }
-
-    .heroRight{
-      display:flex;
-      flex-direction:column;
-      gap: 12px;
-      justify-content:space-between;
-    }
-
-    .kpi{
-      display:grid;
-      gap: 10px;
-    }
-    .kpiItem{
-      padding: 12px 14px;
-      border-radius: 14px;
-      background: rgba(0,0,0,.22);
-      border: 1px solid rgba(255,255,255,.12);
-    }
-    .kpiItem .t{ color: var(--muted2); font-size: 13px; }
-    .kpiItem .v{ font-size: 16px; font-weight: 700; margin-top: 2px; }
-
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 16px;
-    }
-
-    .sectionTitle{
-      margin: 0 0 10px;
-      font-size: 18px;
-      font-weight: 800;
-    }
-
-    .list{
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      display:flex;
-      flex-wrap:wrap;
-      gap: 10px;
-    }
-    .skill{
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
-      padding: 9px 11px;
-      border-radius: 12px;
-      font-size: 14px;
-      color: var(--text);
-    }
-
-    .projects{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-top: 10px;
-    }
-    .project{
-      padding: 16px;
-      border-radius: 16px;
-      background: rgba(0,0,0,.20);
-      border: 1px solid rgba(255,255,255,.12);
-    }
-    .project h3{
-      margin: 0 0 6px;
-      font-size: 16px;
-    }
-    .project p{
-      margin: 0 0 10px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-    .project .links{
-      display:flex;
-      gap: 10px;
-      flex-wrap:wrap;
-    }
+    .brand{display:flex; flex-direction:column; gap:4px}
+    .brand h1{margin:0; font-size:22px}
+    .brand p{margin:0; color:var(--muted); font-size:14px}
+    .nav{display:flex; gap:10px; flex-wrap:wrap}
     .pill{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
-      color: var(--text);
-      font-size: 13px;
+      padding:10px 12px; border:1px solid var(--border);
+      border-radius:999px; background:rgba(255,255,255,.03);
+      font-size:14px;
     }
-
-    .contact{
-      display:flex;
-      flex-wrap:wrap;
-      gap: 10px;
-      margin-top: 10px;
+    .hero{
+      margin-top:18px; display:grid; grid-template-columns: 1.25fr .75fr; gap:16px;
     }
-
-    .footer{
-      margin-top: 18px;
-      color: var(--muted2);
-      font-size: 13px;
-      text-align:center;
+    @media (max-width:900px){ .hero{grid-template-columns:1fr} }
+    .card{
+      border:1px solid var(--border); border-radius:18px; padding:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
     }
-
-    .note{
-      color: var(--muted2);
-      font-size: 13px;
-      margin-top: 8px;
+    .title{margin:0 0 10px; font-size:18px}
+    .muted{color:var(--muted)}
+    .btns{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+    .btn{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px; border-radius:12px; border:1px solid var(--border);
+      background:rgba(255,255,255,.04); font-weight:600; font-size:14px;
     }
-
-    @media (max-width: 900px){
-      .hero{ grid-template-columns: 1fr; }
-      .grid{ grid-template-columns: 1fr; }
-      .projects{ grid-template-columns: 1fr; }
-      .hero h1{ font-size: 36px; }
-    }
+    .btn.primary{border-color:rgba(124,92,255,.45); background:rgba(124,92,255,.16)}
+    .btn.green{border-color:rgba(35,213,171,.45); background:rgba(35,213,171,.12)}
+    .grid{display:grid; grid-template-columns: repeat(3, 1fr); gap:12px}
+    @media (max-width:900px){ .grid{grid-template-columns:1fr} }
+    .item{padding:14px; border-radius:14px; border:1px solid var(--border); background:rgba(0,0,0,.10)}
+    .item h3{margin:0 0 6px; font-size:15px}
+    .tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+    .tag{font-size:12px; padding:6px 8px; border-radius:999px; border:1px solid var(--border); background:rgba(255,255,255,.03)}
+    .sec{margin-top:16px}
+    .split{display:grid; grid-template-columns: 1fr 1fr; gap:12px}
+    @media (max-width:900px){ .split{grid-template-columns:1fr} }
+    .footer{margin-top:22px; text-align:center; color:rgba(233,236,255,.7); font-size:13px}
+    .small{font-size:12px}
+    code{background:rgba(255,255,255,.06); padding:2px 6px; border-radius:8px; border:1px solid var(--border)}
   </style>
 </head>
-
 <body>
   <div class="wrap">
-    <div class="topbar">
+    <header class="top">
       <div class="brand">
-        <div class="logo" aria-hidden="true"><span>AC</span></div>
-        <div>
-          <div style="font-weight:800" data-i18n="brand">AppCraft</div>
-          <div style="color:var(--muted2); font-size:13px" data-i18n="brandSub">DevOps • Docker • CI/CD</div>
-        </div>
+        <h1>Mhmd Allaalden</h1>
+        <p>DevOps Portfolio • Docker • CI/CD • GitHub Actions • Node.js • MySQL</p>
       </div>
-
-      <div class="nav">
-        <span class="chip" data-i18n="chip1">Portfolio</span>
-        <span class="chip" data-i18n="chip2">DevOps</span>
-        <button class="btn" id="langBtn" type="button">EN</button>
-      </div>
-    </div>
+      <nav class="nav">
+        <a class="pill" href="#about">אודות</a>
+        <a class="pill" href="#skills">יכולות</a>
+        <a class="pill" href="#projects">פרויקטים</a>
+        <a class="pill" href="#cicd">CI/CD</a>
+        <a class="pill" href="#contact">יצירת קשר</a>
+      </nav>
+    </header>
 
     <section class="hero">
-      <div class="card" style="background:transparent; border:none; box-shadow:none; padding:0;">
-        <h1 data-i18n="name">Mhmd Allaalden</h1>
-        <p data-i18n="headline">
-          סטודנט הנדסאי תוכנה עם התמחות ב-DevOps, Docker ו-CI/CD. בונה מערכות עם דגש על פרקטיקה, אוטומציה ופריסה.
+      <div class="card" id="about">
+        <h2 class="title">הצגה עצמית</h2>
+        <p class="muted">
+          סטודנט הנדסאי תוכנה, מתמקד ב-DevOps: בניית תהליכי CI/CD, קונטיינרים עם Docker,
+          עבודה עם GitHub Actions, ושילוב Backend עם MySQL.
         </p>
 
-        <div class="badges">
-          <span class="badge">Docker</span>
-          <span class="badge">Docker Compose</span>
-          <span class="badge">GitHub Actions</span>
-          <span class="badge">Node.js</span>
-          <span class="badge">MySQL</span>
+        <div class="btns">
+          <a class="btn primary" target="_blank" href="https://github.com/alaanajeeb10">GitHub שלי</a>
+          <a class="btn green" href="#projects">לפרויקטים</a>
+          <a class="btn" href="#cicd">דוגמא ל-CI/CD</a>
         </div>
 
-        <div class="note" data-i18n="encodingNote">
-          אם ראית בעבר טקסט עם ׳׳׳ — זה היה בגלל קידוד. עכשיו הקובץ UTF-8 ✅
-        </div>
-      </div>
-
-      <div class="heroRight">
-        <div class="kpi">
-          <div class="kpiItem">
-            <div class="t" data-i18n="kpi1t">פוקוס</div>
-            <div class="v" data-i18n="kpi1v">CI/CD + Containers</div>
-          </div>
-          <div class="kpiItem">
-            <div class="t" data-i18n="kpi2t">סטאק</div>
-            <div class="v" data-i18n="kpi2v">Nginx • Node • MySQL</div>
-          </div>
-          <div class="kpiItem">
-            <div class="t" data-i18n="kpi3t">GitHub</div>
-            <div class="v"><a href="https://github.com/alaanajeeb10" target="_blank" rel="noreferrer">github.com/alaanajeeb10</a></div>
-          </div>
-        </div>
-
-        <div class="contact">
-          <a class="pill" href="https://github.com/alaanajeeb10" target="_blank" rel="noreferrer">GitHub</a>
-          <a class="pill" href="mailto:YOUR_EMAIL_HERE">Email</a>
-          <a class="pill" href="https://www.linkedin.com/in/YOUR_LINKEDIN_HERE" target="_blank" rel="noreferrer">LinkedIn</a>
-        </div>
-        <div class="note" data-i18n="contactNote">תעדכן Email/LinkedIn לשלו.</div>
-      </div>
-    </section>
-
-    <div class="grid">
-      <section class="card">
-        <h2 class="sectionTitle" data-i18n="aboutT">עליי</h2>
-        <p data-i18n="aboutP">
-          אני בונה פרויקטים שמדגימים תהליכי DevOps אמיתיים: בנייה, בדיקות, CI/CD, קונטיינרים, ופריסה.
-          המטרה שלי היא לקחת רעיון — ולהפוך אותו למוצר שעולה לאוויר בצורה נקייה ומסודרת.
+        <p class="muted small" style="margin-top:12px">
+          האתר הזה רץ בתוך <code>nginx</code> באמצעות <code>docker compose</code> על פורט <code>8080</code>.
         </p>
-      </section>
+      </div>
 
-      <section class="card">
-        <h2 class="sectionTitle" data-i18n="skillsT">Skills</h2>
-        <ul class="list">
-          <li class="skill">Docker</li>
-          <li class="skill">Docker Compose</li>
-          <li class="skill">Nginx</li>
-          <li class="skill">GitHub Actions</li>
-          <li class="skill">Linux / WSL2</li>
-          <li class="skill">Node.js</li>
-          <li class="skill">MySQL</li>
-        </ul>
-      </section>
-    </div>
-
-    <section class="card" style="margin-top:16px;">
-      <h2 class="sectionTitle" data-i18n="projectsT">Projects</h2>
-
-      <div class="projects">
-        <div class="project">
-          <h3 data-i18n="p1t">Project A — Node.js + MySQL</h3>
-          <p data-i18n="p1p">Backend עם REST API, חיבור למסד נתונים, ותשתית לפריסה עם Docker.</p>
-          <div class="links">
-            <a class="pill" href="https://github.com/alaanajeeb10/project-a-mysql" target="_blank" rel="noreferrer">GitHub Repo</a>
+      <div class="card">
+        <h2 class="title">Quick Info</h2>
+        <div class="grid" style="grid-template-columns:1fr; gap:10px">
+          <div class="item">
+            <h3>סטאק</h3>
+            <div class="tags">
+              <span class="tag">Docker</span>
+              <span class="tag">Compose</span>
+              <span class="tag">Nginx</span>
+              <span class="tag">GitHub Actions</span>
+            </div>
           </div>
-        </div>
-
-        <div class="project">
-          <h3 data-i18n="p2t">Project B — Flask</h3>
-          <p data-i18n="p2p">Microservice בפייתון: API, בדיקות בסיסיות, ותמיכה בהרצה בקונטיינר.</p>
-          <div class="links">
-            <a class="pill" href="https://github.com/alaanajeeb10/project-b-flask" target="_blank" rel="noreferrer">GitHub Repo</a>
-          </div>
-        </div>
-
-        <div class="project">
-          <h3 data-i18n="p3t">Portfolio Site (Nginx)</h3>
-          <p data-i18n="p3p">אתר סטטי שמוגש דרך Nginx עם Docker Compose. רץ על localhost:8080.</p>
-          <div class="links">
-            <span class="pill">Docker</span>
-            <span class="pill">Compose</span>
-            <span class="pill">Nginx</span>
-          </div>
-        </div>
-
-        <div class="project">
-          <h3 data-i18n="p4t">Next Project</h3>
-          <p data-i18n="p4p">כאן נוסיף פרויקט נוסף: CI/CD Pipeline + Deploy ל-OCI / VPS.</p>
-          <div class="links">
-            <span class="pill">CI/CD</span>
-            <span class="pill">Deploy</span>
+          <div class="item">
+            <h3>מטרה</h3>
+            <p class="muted" style="margin:0">להציג פרויקטים ותהליכי DevOps בצורה מקצועית.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="card" style="margin-top:16px;">
-      <h2 class="sectionTitle" data-i18n="contactT">Contact</h2>
-      <div class="contact">
-        <a class="pill" href="https://github.com/alaanajeeb10" target="_blank" rel="noreferrer">GitHub</a>
-        <a class="pill" href="mailto:YOUR_EMAIL_HERE">Email</a>
-        <a class="pill" href="https://www.linkedin.com/in/YOUR_LINKEDIN_HERE" target="_blank" rel="noreferrer">LinkedIn</a>
+    <section class="sec card" id="skills">
+      <h2 class="title">Skills</h2>
+      <div class="grid">
+        <div class="item">
+          <h3>Docker</h3>
+          <p class="muted" style="margin:0">בניית Images, עבודה עם Volumes/Networks, ניהול Containers.</p>
+        </div>
+        <div class="item">
+          <h3>Docker Compose</h3>
+          <p class="muted" style="margin:0">הרצת שירותים, Ports, Env, קבצי compose מסודרים.</p>
+        </div>
+        <div class="item">
+          <h3>CI/CD</h3>
+          <p class="muted" style="margin:0">GitHub Actions: build/test/lint, והרצה אוטומטית.</p>
+        </div>
       </div>
-      <div class="note" data-i18n="contactHint">
-        טיפ: אם יש לך וואטסאפ עסקי/טלפון — אפשר להוסיף גם כפתור WhatsApp.
+    </section>
+
+    <section class="sec card" id="projects">
+      <h2 class="title">Projects</h2>
+      <div class="split">
+        <div class="item">
+          <h3>Portfolio Site (Docker + Nginx)</h3>
+          <p class="muted" style="margin:0">
+            אתר סטטי שמוגש ע״י Nginx ונארז בקונטיינר. הפעלה באמצעות Docker Compose.
+          </p>
+          <div class="btns">
+            <a class="btn primary" target="_blank" href="https://github.com/alaanajeeb10/portfolio-site">Repo</a>
+            <a class="btn" href="#cicd">CI/CD</a>
+          </div>
+        </div>
+
+        <div class="item">
+          <h3>Project A – Node.js + MySQL</h3>
+          <p class="muted" style="margin:0">
+            Backend עם MySQL, Routes/Middleware, שמירה במסד נתונים ותיעוד.
+          </p>
+          <div class="btns">
+            <a class="btn primary" target="_blank" href="https://github.com/alaanajeeb10/project-a-mysql">Repo</a>
+          </div>
+        </div>
+
+        <div class="item">
+          <h3>Project B – Flask Microservice</h3>
+          <p class="muted" style="margin:0">
+            שירות קטן ב-Python/Flask כחלק מארכיטקטורה של Microservices.
+          </p>
+          <div class="btns">
+            <a class="btn primary" target="_blank" href="https://github.com/alaanajeeb10/project-b-flask">Repo</a>
+          </div>
+        </div>
+
+        <div class="item">
+          <h3>DevOps Full Project (AppCraft)</h3>
+          <p class="muted" style="margin:0">
+            אקוסיסטם מלא: Frontend + Backend + DB + Docker Compose + CI/CD.
+          </p>
+          <div class="tags">
+            <span class="tag">Compose</span>
+            <span class="tag">Actions</span>
+            <span class="tag">MySQL</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec card" id="cicd">
+      <h2 class="title">CI/CD (GitHub Actions)</h2>
+      <p class="muted">
+        המטרה: בכל Push ל־main לבצע Build ל־Docker Image ולוודא שה־Dockerfile תקין.
+        (בהמשך נוסיף גם Publish ל־GHCR).
+      </p>
+      <div class="item">
+        <h3>בשלב הבא נוסיף קובץ:</h3>
+        <p class="muted" style="margin:0">
+          <code>.github/workflows/docker-build.yml</code>
+        </p>
+      </div>
+    </section>
+
+    <section class="sec card" id="contact">
+      <h2 class="title">יצירת קשר</h2>
+      <div class="grid">
+        <div class="item">
+          <h3>GitHub</h3>
+          <a class="muted" target="_blank" href="https://github.com/alaanajeeb10">github.com/alaanajeeb10</a>
+        </div>
+        <div class="item">
+          <h3>Email</h3>
+          <p class="muted" style="margin:0">תוסיף כאן מייל שלך (אם תרצה).</p>
+        </div>
+        <div class="item">
+          <h3>LinkedIn</h3>
+          <p class="muted" style="margin:0">תוסיף כאן לינקדאין שלך (אם תרצה).</p>
+        </div>
       </div>
     </section>
 
     <div class="footer">
-      <div>© <span id="year"></span> <span data-i18n="footerName">Mhmd Allaalden</span></div>
-      <div style="margin-top:6px;" data-i18n="footerSub">Built with Docker + Nginx • Served on port 8080</div>
+      © 2026 Mhmd Allaalden • Built with Docker + Nginx
     </div>
   </div>
-
-  <script>
-    // simple i18n (HE/EN)
-    const dict = {
-      he: {
-        brand: "AppCraft",
-        brandSub: "DevOps • Docker • CI/CD",
-        chip1: "Portfolio",
-        chip2: "DevOps",
-        name: "Mhmd Allaalden",
-        headline: "סטודנט הנדסאי תוכנה עם התמחות ב-DevOps, Docker ו-CI/CD. בונה מערכות עם דגש על פרקטיקה, אוטומציה ופריסה.",
-        encodingNote: "אם ראית בעבר טקסט עם ׳׳׳ — זה היה בגלל קידוד. עכשיו הקובץ UTF-8 ✅",
-        kpi1t: "פוקוס",
-        kpi1v: "CI/CD + Containers",
-        kpi2t: "סטאק",
-        kpi2v: "Nginx • Node • MySQL",
-        kpi3t: "GitHub",
-        contactNote: "תעדכן Email/LinkedIn לשלו.",
-        aboutT: "עליי",
-        aboutP: "אני בונה פרויקטים שמדגימים תהליכי DevOps אמיתיים: בנייה, בדיקות, CI/CD, קונטיינרים, ופריסה. המטרה שלי היא לקחת רעיון — ולהפוך אותו למוצר שעולה לאוויר בצורה נקייה ומסודרת.",
-        skillsT: "Skills",
-        projectsT: "Projects",
-        p1t: "Project A — Node.js + MySQL",
-        p1p: "Backend עם REST API, חיבור למסד נתונים, ותשתית לפריסה עם Docker.",
-        p2t: "Project B — Flask",
-        p2p: "Microservice בפייתון: API, בדיקות בסיסיות, ותמיכה בהרצה בקונטיינר.",
-        p3t: "Portfolio Site (Nginx)",
-        p3p: "אתר סטטי שמוגש דרך Nginx עם Docker Compose. רץ על localhost:8080.",
-        p4t: "Next Project",
-        p4p: "כאן נוסיף פרויקט נוסף: CI/CD Pipeline + Deploy ל-OCI / VPS.",
-        contactT: "Contact",
-        contactHint: "טיפ: אם יש לך וואטסאפ עסקי/טלפון — אפשר להוסיף גם כפתור WhatsApp.",
-        footerName: "Mhmd Allaalden",
-        footerSub: "Built with Docker + Nginx • Served on port 8080"
-      },
-      en: {
-        brand: "AppCraft",
-        brandSub: "DevOps • Docker • CI/CD",
-        chip1: "Portfolio",
-        chip2: "DevOps",
-        name: "Mhmd Allaalden",
-        headline: "Software engineering student focused on DevOps, Docker, and CI/CD. I build practical, automated, deployable systems.",
-        encodingNote: "If you saw weird apostrophes before — it was an encoding issue. This file is UTF-8 ✅",
-        kpi1t: "Focus",
-        kpi1v: "CI/CD + Containers",
-        kpi2t: "Stack",
-        kpi2v: "Nginx • Node • MySQL",
-        kpi3t: "GitHub",
-        contactNote: "Update your Email/LinkedIn.",
-        aboutT: "About",
-        aboutP: "I build projects that demonstrate real DevOps workflows: build, tests, CI/CD, containers, and deployment. My goal is to take an idea and turn it into a clean, production-ready deliverable.",
-        skillsT: "Skills",
-        projectsT: "Projects",
-        p1t: "Project A — Node.js + MySQL",
-        p1p: "Backend REST API connected to a database, prepared for Docker deployment.",
-        p2t: "Project B — Flask",
-        p2p: "Python microservice: API, basic testing, and container-friendly structure.",
-        p3t: "Portfolio Site (Nginx)",
-        p3p: "Static site served with Nginx using Docker Compose on localhost:8080.",
-        p4t: "Next Project",
-        p4p: "We can add a CI/CD pipeline + deploy to OCI / VPS.",
-        contactT: "Contact",
-        contactHint: "Tip: add a WhatsApp button if you want.",
-        footerName: "Mhmd Allaalden",
-        footerSub: "Built with Docker + Nginx • Served on port 8080"
-      }
-    };
-
-    const langBtn = document.getElementById("langBtn");
-    let lang = "he";
-
-    function applyLang(next){
-      lang = next;
-      document.documentElement.lang = lang;
-      document.documentElement.dir = (lang === "he") ? "rtl" : "ltr";
-      langBtn.textContent = (lang === "he") ? "EN" : "HE";
-
-      document.querySelectorAll("[data-i18n]").forEach(el => {
-        const key = el.getAttribute("data-i18n");
-        if (dict[lang] && dict[lang][key]) el.textContent = dict[lang][key];
-      });
-    }
-
-    langBtn.addEventListener("click", () => {
-      applyLang(lang === "he" ? "en" : "he");
-    });
-
-    document.getElementById("year").textContent = new Date().getFullYear();
-    applyLang("he");
-  </script>
 </body>
 </html>
